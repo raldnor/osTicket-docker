@@ -1,0 +1,20 @@
+FROM nginx:latest
+
+RUN apt-get update && \
+	apt-get install -y git && \
+	apt-get install -y php
+
+WORKDIR /app/www
+RUN git clone https://github.com/osTicket/osTicket /app/www/ && \
+	php ./manage.php deploy --setup /app/www/ && \
+	cp /app/www/include/ost-sampleconfig.php /app/www/include/ost-config.php && \
+	chmod 0666 /app/www/include/ost-config.php
+
+
+
+RUN echo "<?php phpinfo();" > /app/www/info.php && \
+	    echo "Hi." > /app/www/index.html && \
+	    chown -R nobody /app/www
+
+ADD dist/default.conf /etc/nginx/conf.d
+

@@ -1,0 +1,43 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 3666:80
+    volumes:
+      - osticket_application:/app/www/
+    networks:
+      - osticket
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    volumes:
+      - osticket_application:/app/www/
+    networks: 
+      - osticket
+  mysql:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'LetMeDoTheAdministration!!1!'
+      MYSQL_USER: 'osticket'
+      MYSQL_PASSWORD: 'TicketsTicketsAndMoreTickets'
+      MYSQL_DATABASE: 'osticket'
+    ports:
+      - 3306:3306
+    volumes:
+      - osticket_database:/var/lib/mysql
+    networks:
+      - osticket
+
+volumes:
+  osticket_application: {}
+  osticket_database: {}
+
+networks:
+  osticket:
+    driver: bridge
+
+
