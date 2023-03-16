@@ -20,7 +20,7 @@ docker-compose up -d
 ```
 
 Now you can use a browser to go to the following url:  
-[http://<docker ip>:3666](http://<docker ip>:3666)  
+http://\<docker ip\>:3666
 
 ## osTicket setup
 The first time you enter the url you will be presented 
